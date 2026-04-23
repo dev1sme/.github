@@ -1,12 +1,16 @@
 ### Hi there, I'm Lê Tuấn Thông 👋
 
-🔭 I'm currently working on [Enterprise Web Systems 💻](https://github.com/dev1sme) <br />
+🔭 I'm currently working on [Enterprise Web Systems 💻](https://github.com/IDev4life) <br />
 🌱 I'm currently experimenting with [Cloud & DevOps tools 🛠](https://github.com/topics/cloud) <br />
 👯 I'm looking to collaborate on more backend and open source projects <br />
 💬 Ask me about Java, Spring Boot, System Design, or anything tech-related. I'd be glad to help (if I can ✨) <br />
-📫 How to reach me: Shoot me an email at <a href="mailto:letuanthong350@gmail.com"><img src="https://img.shields.io/static/v1?label=%F0%9F%92%8C&message=contact@dev1sme.cloud&labelColor=lightgrey&height=30&color=0072c6" alt="letuanthong350@gmail.com" valign="middle"></a> <br />
+📫 How to reach me: Shoot me an email at <a href="mailto:contact@dev1sme.cloud"><img src="https://img.shields.io/static/v1?label=%F0%9F%92%8C&message=contact@dev1sme.cloud&labelColor=lightgrey&height=30&color=0072c6" alt="contact@dev1sme.cloud" valign="middle"></a> <br />
 😄 Pronouns: he/him <br />
 ⚡ Fun fact: I ❤ building scalable backend systems
+
+#### 🏢 Organization
+
+[![IDev4life](https://img.shields.io/badge/IDev4life-181717?style=flat&logo=github&logoColor=white)](https://github.com/IDev4life)
 
 #### Connect with me
 
@@ -32,6 +36,5 @@
 <br/>
 
 <!-- #### 📊 GitHub Stats
-
 [![GitHub stats](https://vercel-github-readme-stats-psi.vercel.app/api?username=dev1sme&hide=stars&hide_title=true&include_all_commits=true&show_icons=true&count_private=true&theme=default)](https://github.com/anuraghazra/github-readme-stats)
 [![GitHub language stats](https://vercel-github-readme-stats-psi.vercel.app/api/top-langs/?username=dev1sme&layout=compact&langs_count=4&theme=default)](https://github.com/anuraghazra/github-readme-stats) -->
