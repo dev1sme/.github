@@ -1,0 +1,85 @@
+name: Reusable Docker Build & Notify
+
+on:
+  workflow_call:
+    inputs:
+      image_name:
+        description: "Tên image, ví dụ: dev1sme/my-app"
+        required: true
+        type: string
+      dockerfile_path:
+        description: "Đường dẫn Dockerfile"
+        required: false
+        type: string
+        default: "./Dockerfile"
+      build_target:
+        description: "Multi-stage target"
+        required: false
+        type: string
+        default: "production"
+      registry:
+        description: "Container registry"
+        required: false
+        type: string
+        default: "ghcr.io"
+    secrets:
+      REGISTRY_TOKEN:
+        required: true
+      TELEGRAM_BOT_TOKEN:
+        required: true
+      TELEGRAM_CHAT_ID:
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to Registry
+        run: |
+          echo "${{ secrets.REGISTRY_TOKEN }}" | \
+          docker login ${{ inputs.registry }} \
+            -u ${{ github.actor }} \
+            --password-stdin
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -f ${{ inputs.dockerfile_path }} \
+            -t ${{ inputs.registry }}/${{ inputs.image_name }}:${{ github.sha }} \
+            -t ${{ inputs.registry }}/${{ inputs.image_name }}:latest \
+            --target ${{ inputs.build_target }} \
+            .
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ inputs.registry }}/${{ inputs.image_name }}:${{ github.sha }}
+          docker push ${{ inputs.registry }}/${{ inputs.image_name }}:latest
+
+      - name: Telegram — Thành công
+        if: success()
+        run: |
+          curl -s -X POST \
+            "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d parse_mode="Markdown" \
+            -d text="✅ *BUILD SUCCESS*
+Repo: \`${{ github.repository }}\`
+Branch: \`${{ github.ref_name }}\`
+Image: \`${{ inputs.image_name }}:${{ github.sha }}\`
+[Xem run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+
+      - name: Telegram — Thất bại
+        if: failure()
+        run: |
+          curl -s -X POST \
+            "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d parse_mode="Markdown" \
+            -d text="❌ *BUILD FAILED*
+Repo: \`${{ github.repository }}\`
+Branch: \`${{ github.ref_name }}\`
+[Xem lỗi](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
